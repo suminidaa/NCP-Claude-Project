@@ -1,4 +1,4 @@
-# VS Code + Claude Code + Remote-SSH 랩 가이드
+# NCP + VS Code + Claude Code 랩 가이드
 
 > **대상:** VS Code에 익숙하신 분
 >
