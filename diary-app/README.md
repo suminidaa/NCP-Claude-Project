@@ -99,7 +99,21 @@ APP_PORT=8000
 
 > ⚠️ `.env` 파일은 절대 깃에 커밋하지 마세요. `.gitignore`에 이미 등록되어 있습니다.
 
-### 4단계 · 실행
+### 4단계 · 가상환경 생성 및 의존성 설치
+
+`run.sh`는 프로젝트 폴더 안의 `venv/` 가상환경을 활성화한 뒤 앱을 실행합니다. 따라서 최초 1회는 아래 명령으로 가상환경을 만들고 패키지를 설치해야 합니다.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+> 💡 Windows(PowerShell)에서는 활성화 명령이 `venv\Scripts\Activate.ps1` 입니다.
+> 💡 이 단계를 건너뛰면 실행 시 `./run.sh: line 4: venv/bin/activate: No such file or directory` 오류가 발생합니다.
+
+### 5단계 · 실행
 
 ```bash
 ./run.sh
