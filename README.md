@@ -152,7 +152,7 @@ cp .env.example .env       # .env 파일 편집 후 NCP 키 + OCR 정보 입력
 - ACG에서 두 포트를 모두 열어주세요.
 
 ### Q4. 비용이 얼마나 나오나요?
-- **NCP Compute**: 최저 사양 서버 기준 시간당 약 30~50원 (지속 사용 시 월 2~4만원)
+- **NCP Compute**: 서버 사양마다 다르지만 Standard 2vCPU,8GBmemory, SSD기준 월 88,000원의 요금이 발생할 수 있습니다. 상세 요금은 네이버클라우드플랫폼 요금계산기(https://www.ncloud.com/charge/calc/ko)를 확인해주세요.
 - **NCP Object Storage**: 무료 한도 안에서 충분히 실습 가능
 - **NCP CLOVA OCR Basic 플랜**: 월 300건 호출까지 무료
 - 💡 **실습이 끝나면 반드시 서버 정지·삭제**로 비용을 막아주세요.
