@@ -159,7 +159,7 @@ source venv/bin/activate
 uvicorn app:app --host 0.0.0.0 --port 8001
 ```
 
-브라우저에서 **http://{서버의 공인IP}:8001** 접속.
+브라우저에서 **http://<서버의 공인IP>:8001** 접속.
 
 원격 서버라면 OS 방화벽과 **NCP ACG** myip에 대한 **TCP 8001** 인바운드를 열어주세요.
 모든 IP에 대한 8001포트를 오픈하는 것은 보안상 추천하지 않습ㄴ디ㅏ. 
