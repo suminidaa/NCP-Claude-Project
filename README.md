@@ -116,7 +116,7 @@ ncp-claudecode/
 ```bash
 # 1. NCP 서버에 SSH 접속 후, 이 저장소를 클론
 git clone <repo url>
-cd NCP-ClaudeCode-vscode-integration
+cd NCP-Claude-Project
 
 # 2. 다이어리 앱 실행
 cd diary-app
@@ -129,7 +129,7 @@ cp .env.example .env       # .env 파일 편집 후 NCP 키 입력
 cd ../budget-app
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env       # .env 파일 편집 후 NCP 키 + OCR 정보 입력
+cp .env.example .env       # .env 파일 편집 후 NCP 키 + Object Storage 버킷 명 + OCR 정보 입력
 ./run.sh                   # http://<공인IP>:8001
 ```
 
