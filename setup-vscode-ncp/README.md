@@ -59,13 +59,6 @@ cd NCP-Claude-Project/ncp-mcp
 pip install -r requirements.txt or pip3 install -r requirements.txt
 ```
 
-> 💡 권장: 가상환경 사용
-> ```bash
-> python3 -m venv .venv
-> source .venv/bin/activate    # Windows: .venv\Scripts\activate
-> pip install -r requirements.txt
-> ```
-
 ---
 
 ## Part 2. Claude에 NCP MCP 서버 등록
