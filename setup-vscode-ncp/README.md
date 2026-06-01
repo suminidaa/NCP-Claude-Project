@@ -91,7 +91,7 @@ pip install -r requirements.txt or pip3 install -r requirements.txt
 ```
 
 이미 해당 파일에 내용이 있는 경우, 아래와 같이 반영
-
+```json
 {
     "mcpServers": {
       "ncp-server": {
@@ -124,7 +124,7 @@ pip install -r requirements.txt or pip3 install -r requirements.txt
     },
     "coworkUserFilesPath": "/Users/user/Claude"
   }
-
+```
 
 설정 후 **Claude Desktop을 완전히 종료 후 재시작**합니다.
 
