@@ -51,7 +51,7 @@ NCP MCP 서버를 사용하면 Claude에서 자연어만으로 NCP 서버·VPC·
 **개인 PC의 터미널을 열고 저장소 클론 및 의존성 설치 진행**
 
 ```bash
-git clone https://oss.navercorp.com/jina-kang/NCP-Claude-Project.git
+git <repo url>
 cd NCP-Claude-Project/ncp-mcp
 ```
 
