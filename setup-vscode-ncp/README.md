@@ -56,7 +56,7 @@ cd NCP-Claude-Project/ncp-mcp
 ```
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt or pip3 install -r requirements.txt
 ```
 
 > 💡 권장: 가상환경 사용
@@ -74,7 +74,6 @@ pip install -r requirements.txt
 
 설정 파일 위치: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
 파일이 이미 생성되어 있는 경우 기존 파일의 내용 상단에 아래 내용을 추가합니다.
-(이미 생성된 내용에 추가할 경우 가장 마지막에 `,`를 추가해주세요)
 
 ```json
 {
@@ -90,6 +89,42 @@ pip install -r requirements.txt
   }
 }
 ```
+
+이미 해당 파일에 내용이 있는 경우, 아래와 같이 반영
+
+{
+    "mcpServers": {
+      "ncp-server": {
+        "command": "python3",
+        "args": ["/절대/경로/NCP-Claude-Project/ncp-mcp/ncp_server.py"],
+        "env": {
+          "NCP_ACCESS_KEY": "your_access_key",
+          "NCP_SECRET_KEY": "your_secret_key"
+        }
+      }
+    },
+    "preferences": {
+      "coworkScheduledTasksEnabled": true,
+      "ccdScheduledTasksEnabled": true,
+      "coworkWebSearchEnabled": true,
+      "remoteToolsDeviceName": "XX",
+      "epitaxyPrefs": {
+        "starred-local-code-sessions": [],
+        "starred-cowork-spaces": [],
+        "starred-session-groups": [],
+        "dframe-local-slice": {
+          "pinnedOrder": [],
+          "customGroupAssignments": {},
+          "customGroupOrder": {}
+        }
+      },
+      "bypassPermissionsGateByAccount": {
+        "X": false
+      }
+    },
+    "coworkUserFilesPath": "/Users/user/Claude"
+  }
+
 
 설정 후 **Claude Desktop을 완전히 종료 후 재시작**합니다.
 
