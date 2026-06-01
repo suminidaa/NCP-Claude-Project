@@ -161,30 +161,7 @@ Claude에 다음과 같이 자연어로 요청하면 됩니다.
 
 **Step 2.** web-dev 서버에 public ip도 부여해줘.
 
-### 3-2. 자주 쓰는 값
-
-#### OS 이미지 alias
-
-| alias | 풀 코드 |
-|---|---|
-| `rocky8.8` | `SW.VSVR.OS.LNX64.ROCKY.0808.B050` |
-| `rocky8.10` | `SW.VSVR.OS.LNX64.ROCKY.0810.B050` |
-
-#### 서버 스펙 alias (Standard G2)
-
-| alias | vCPU / 메모리 |
-|---|---|
-| `s2-g2` | 2 vCPU / 8 GB |
-| `s4-g2` | 4 vCPU / 16 GB |
-| `s8-g2` | 8 vCPU / 32 GB |
-| `s16-g2` | 16 vCPU / 64 GB |
-| `s32-g2` | 32 vCPU / 128 GB |
-
-#### 리전 코드
-
-`KR` (기본) · `SGN` · `JPN` · `USWN`
-
-### 3-3. `provision_server` 파라미터 기본값
+### 3-2. `provision_server` 파라미터 기본값
 
 `provision_server`는 VPC + Subnet + ACG 규칙 + Login Key + Server를 한 번에 부트스트랩하는 핵심 함수입니다. **`server_name` 하나만 지정해도 동작**합니다.
 
@@ -204,6 +181,7 @@ Claude에 다음과 같이 자연어로 요청하면 됩니다.
 #### 함수 내부 고정 설정
 
 **ACG 인바운드 규칙**
+**ACG는 서버의 방화벽 역할을 수행하므로 불필요한 IP, 포트 오픈은 피하는 것이 좋습니다.**
 
 | 프로토콜 | 출발지 | 포트 | 용도 |
 |---|---|---|---|
@@ -242,7 +220,7 @@ provision_server(server_name="prod-api", image="rocky8.8", spec="s4-g2")
 provision_server(server_name="sg-app", region_code="SGN", zone_code="KR-1")
 ```
 
-### 3-4. 문제 해결
+### 3-3. 문제 해결
 
 | 증상 | 해결 |
 |---|---|
@@ -253,7 +231,7 @@ provision_server(server_name="sg-app", region_code="SGN", zone_code="KR-1")
 | `ModuleNotFoundError: No module named 'mcp'` | `pip install -r requirements.txt` 재실행 |
 | `boto3 미설치` 안내 | Object Storage 사용 시 `pip install boto3` |
 
-### 3-5. 보안 주의사항
+### 3-4. 보안 주의사항
 
 - **`.env`, `*.pem` 파일은 절대 git에 커밋하지 마세요** (`.gitignore`로 차단되어 있음)
 - Access Key가 노출되면 즉시 NCP 콘솔에서 재발급
