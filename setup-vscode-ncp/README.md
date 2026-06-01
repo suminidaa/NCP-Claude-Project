@@ -287,8 +287,6 @@ Claude Code는 터미널에서 동작하는 Anthropic 공식 AI 코딩 도구입
 2. 검색창에 `Claude Code` 입력
 3. **"Claude Code for VSCode"** (Anthropic 공식) → **[설치]** 클릭
 
-![Claude Code 확장 설치](images/image1.png)
-
 ### 5-2. Claude Code 로그인
 
 1. **Claude.ai Subscription** 클릭
@@ -302,8 +300,6 @@ Claude Code는 터미널에서 동작하는 Anthropic 공식 AI 코딩 도구입
 2. 우측 상단의 **Claude 로고**를 선택합니다.
 3. Claude 실행창이 열리는지 확인합니다.
 
-![Claude 실행창 확인](images/image2.png)
-
 ---
 
 ## Part 6. Remote-SSH 확장 설치
@@ -312,7 +308,7 @@ Remote-SSH는 SSH로 원격 서버에 접속해, 로컬 VS Code 창에서 원격
 
 ### 6-1. 확장 설치
 
-1. VS Code 왼쪽 사이드바에서 **Extensions 아이콘** (네모 4개) ![Extensions 아이콘](images/image3.png) 클릭
+1. VS Code 왼쪽 사이드바에서 **Extensions 아이콘** (네모 4개) 클릭
 2. 검색창에 `Remote - SSH` 입력
 3. **"Remote - SSH"** (Microsoft 발행, 파란색 인증 마크 확인) → **[설치]** 클릭
 4. 함께 설치되는 **"Remote - SSH: Editing Configuration Files"**도 자동 설치됩니다.
@@ -321,7 +317,6 @@ Remote-SSH는 SSH로 원격 서버에 접속해, 로컬 VS Code 창에서 원격
 
 왼쪽 사이드바 가장 아래쪽에 `><` 모양 아이콘(Remote Explorer)이 생기면 정상입니다.
 
-![Remote Explorer 아이콘](images/image4.png)
 
 ---
 
@@ -340,7 +335,7 @@ Remote-SSH로 NCP 서버에 접속하려면 두 가지가 필요합니다:
 
 ### 7-2. 서버 공인 IP 확인
 
-1. NCP 콘솔([https://console.ncloud.com](https://console.ncloud.com)) → **Server → Server**
+1. NCP 콘솔 → ** Computee→ Server**
 2. 해당 서버의 **"공인 IP"** 컬럼 값을 메모합니다.
 3. 또는 Claude Desktop에서 `"내 NCP 서버 목록 보여줘"`로도 확인 가능합니다.
 
