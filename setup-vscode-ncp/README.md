@@ -161,82 +161,6 @@ Claude에 다음과 같이 자연어로 요청하면 됩니다.
 
 **Step 2.** web-dev 서버에 public ip도 부여해줘.
 
-### 3-2. `provision_server` 파라미터 기본값
-
-`provision_server`는 VPC + Subnet + ACG 규칙 + Login Key + Server를 한 번에 부트스트랩하는 핵심 함수입니다. **`server_name` 하나만 지정해도 동작**합니다.
-
-| 파라미터 | 디폴트 값 | 설명 |
-|---|---|---|
-| `server_name` | **(필수)** | 서버 이름 (3~30자). 다른 자원 이름의 기본값으로도 재사용됨 |
-| `image` | `rocky8.10` | OS 이미지 alias |
-| `spec` | `s2-g2` | 서버 스펙 alias (2 vCPU / 8 GB) |
-| `vpc_name` | `{server_name}-vpc` | 빈 값이면 서버 이름 뒤에 `-vpc` 자동 부여 |
-| `vpc_cidr` | `10.0.0.0/16` | 신규 VPC 생성 시 사용 (재사용 시 무시) |
-| `subnet_name` | `{server_name}-subnet` | 빈 값이면 서버 이름 뒤에 `-subnet` 자동 부여 |
-| `subnet_cidr` | `10.0.1.0/24` | 신규 Subnet 생성 시 사용 (재사용 시 무시) |
-| `zone_code` | `KR-2` | Subnet Zone (`KR-1` 또는 `KR-2`) |
-| `login_key_name` | `server_name` 값 그대로 | 빈 값이면 서버 이름과 동일하게 설정 |
-| `region_code` | `KR` | 리전 (`KR` · `SGN` · `JPN` · `USWN`) |
-
-#### 함수 내부 고정 설정
-
-**ACG 인바운드 규칙**
-**ACG는 서버의 방화벽 역할을 수행하므로 불필요한 IP, 포트 오픈은 피하는 것이 좋습니다.**
-
-| 프로토콜 | 출발지 | 포트 | 용도 |
-|---|---|---|---|
-| TCP | 내 공인 IP (`myip/32`) | 22 | SSH |
-| TCP | 내 공인 IP (`myip/32`) | 3389 | RDP |
-| TCP | `0.0.0.0/0` | 80 | HTTP (전체 공개) |
-
-**ACG 아웃바운드 규칙**
-
-| 프로토콜 | 목적지 | 포트 |
-|---|---|---|
-| TCP | `0.0.0.0/0` | 1-65535 |
-| UDP | `0.0.0.0/0` | 1-65535 |
-| ICMP | `0.0.0.0/0` | 전체 |
-
-**Login Key 저장**
-- 저장 경로: `~/Downloads/{login_key_name}.pem`
-- 동일 이름 pem 파일이 이미 있으면 **재사용**, 없으면 신규 발급 후 `chmod 600`
-
-#### 동작 특성
-
-1. **멱등성** — 같은 이름의 VPC / Subnet / Login Key가 있으면 그대로 재사용
-2. **공인 IP 미포함** — 서버가 RUN 상태가 된 뒤 `assign_public_ip`를 별도 호출해야 함
-3. **RUN 대기 안 함** — 서버 생성 요청 직후 바로 반환 (VPC/Subnet은 RUN까지 최대 90초 대기)
-
-#### 사용 예시
-
-```python
-# 최소 입력 — 모든 디폴트 사용
-provision_server(server_name="demo")
-
-# 스펙·이미지 변경
-provision_server(server_name="prod-api", image="rocky8.8", spec="s4-g2")
-
-# 다른 리전 / Zone
-provision_server(server_name="sg-app", region_code="SGN", zone_code="KR-1")
-```
-
-### 3-3. 문제 해결
-
-| 증상 | 해결 |
-|---|---|
-| HTTP 401 | `NCP_ACCESS_KEY` / `NCP_SECRET_KEY` 값 확인 |
-| HTTP 400 | `vpcNo` · `subnetNo` 값이 유효한지 확인 |
-| 서버 삭제 실패 | NSTOP(정지) 상태여야 삭제 가능 |
-| Claude에서 툴이 안 보임 | Claude Desktop 완전 종료 후 재시작 |
-| `ModuleNotFoundError: No module named 'mcp'` | `pip install -r requirements.txt` 재실행 |
-| `boto3 미설치` 안내 | Object Storage 사용 시 `pip install boto3` |
-
-### 3-4. 보안 주의사항
-
-- **`.env`, `*.pem` 파일은 절대 git에 커밋하지 마세요** (`.gitignore`로 차단되어 있음)
-- Access Key가 노출되면 즉시 NCP 콘솔에서 재발급
-- 공유 PC에서는 환경변수 대신 OS 시크릿 매니저 사용 권장
-
 ---
 
 ## Part 4. VS Code 설치
@@ -380,6 +304,88 @@ chmod 600 ~/.ssh/config
 ### 8-2. 연결 확인
 
 새 창의 좌측 하단에 `SSH: ncp-web-dev` 같은 표시가 보이면 정상 접속된 것입니다.
+
+---
+
+## 참고. `provision_server` 파라미터 기본값
+
+`provision_server`는 VPC + Subnet + ACG 규칙 + Login Key + Server를 한 번에 부트스트랩하는 핵심 함수입니다. **`server_name` 하나만 지정해도 동작**합니다.
+
+| 파라미터 | 디폴트 값 | 설명 |
+|---|---|---|
+| `server_name` | **(필수)** | 서버 이름 (3~30자). 다른 자원 이름의 기본값으로도 재사용됨 |
+| `image` | `rocky8.10` | OS 이미지 alias |
+| `spec` | `s2-g2` | 서버 스펙 alias (2 vCPU / 8 GB) |
+| `vpc_name` | `{server_name}-vpc` | 빈 값이면 서버 이름 뒤에 `-vpc` 자동 부여 |
+| `vpc_cidr` | `10.0.0.0/16` | 신규 VPC 생성 시 사용 (재사용 시 무시) |
+| `subnet_name` | `{server_name}-subnet` | 빈 값이면 서버 이름 뒤에 `-subnet` 자동 부여 |
+| `subnet_cidr` | `10.0.1.0/24` | 신규 Subnet 생성 시 사용 (재사용 시 무시) |
+| `zone_code` | `KR-2` | Subnet Zone (`KR-1` 또는 `KR-2`) |
+| `login_key_name` | `server_name` 값 그대로 | 빈 값이면 서버 이름과 동일하게 설정 |
+| `region_code` | `KR` | 리전 (`KR` · `SGN` · `JPN` · `USWN`) |
+
+#### 함수 내부 고정 설정
+
+**ACG 인바운드 규칙**
+**ACG는 서버의 방화벽 역할을 수행하므로 불필요한 IP, 포트 오픈은 피하는 것이 좋습니다.**
+
+| 프로토콜 | 출발지 | 포트 | 용도 |
+|---|---|---|---|
+| TCP | 내 공인 IP (`myip/32`) | 22 | SSH |
+| TCP | 내 공인 IP (`myip/32`) | 3389 | RDP |
+| TCP | `0.0.0.0/0` | 80 | HTTP (전체 공개) |
+
+**ACG 아웃바운드 규칙**
+
+| 프로토콜 | 목적지 | 포트 |
+|---|---|---|
+| TCP | `0.0.0.0/0` | 1-65535 |
+| UDP | `0.0.0.0/0` | 1-65535 |
+| ICMP | `0.0.0.0/0` | 전체 |
+
+**Login Key 저장**
+- 저장 경로: `~/Downloads/{login_key_name}.pem`
+- 동일 이름 pem 파일이 이미 있으면 **재사용**, 없으면 신규 발급 후 `chmod 600`
+
+#### 동작 특성
+
+1. **멱등성** — 같은 이름의 VPC / Subnet / Login Key가 있으면 그대로 재사용
+2. **공인 IP 미포함** — 서버가 RUN 상태가 된 뒤 `assign_public_ip`를 별도 호출해야 함
+3. **RUN 대기 안 함** — 서버 생성 요청 직후 바로 반환 (VPC/Subnet은 RUN까지 최대 90초 대기)
+
+#### 사용 예시
+
+```python
+# 최소 입력 — 모든 디폴트 사용
+provision_server(server_name="demo")
+
+# 스펙·이미지 변경
+provision_server(server_name="prod-api", image="rocky8.8", spec="s4-g2")
+
+# 다른 리전 / Zone
+provision_server(server_name="sg-app", region_code="SGN", zone_code="KR-1")
+```
+
+---
+
+## 참고. 문제 해결
+
+| 증상 | 해결 |
+|---|---|
+| HTTP 401 | `NCP_ACCESS_KEY` / `NCP_SECRET_KEY` 값 확인 |
+| HTTP 400 | `vpcNo` · `subnetNo` 값이 유효한지 확인 |
+| 서버 삭제 실패 | NSTOP(정지) 상태여야 삭제 가능 |
+| Claude에서 툴이 안 보임 | Claude Desktop 완전 종료 후 재시작 |
+| `ModuleNotFoundError: No module named 'mcp'` | `pip install -r requirements.txt` 재실행 |
+| `boto3 미설치` 안내 | Object Storage 사용 시 `pip install boto3` |
+
+---
+
+## 참고. 보안 주의사항
+
+- **`.env`, `*.pem` 파일은 절대 git에 커밋하지 마세요** (`.gitignore`로 차단되어 있음)
+- Access Key가 노출되면 즉시 NCP 콘솔에서 재발급
+- 공유 PC에서는 환경변수 대신 OS 시크릿 매니저 사용 권장
 
 ---
 
