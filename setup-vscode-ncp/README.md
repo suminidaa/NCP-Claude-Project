@@ -147,32 +147,6 @@ pip install -r requirements.txt or pip3 install -r requirements.txt
 }
 ```
 
-### 2-3. Claude Code에 MCP 등록
-
-Claude Desktop에 이미 설정했다면 아래 두 가지 방법 중 하나를 사용합니다.
-
-#### 방법 A. Claude Desktop 설정에서 가져오기 (Mac / WSL, 권장)
-
-```bash
-claude mcp add-from-claude-desktop
-```
-
-→ Claude Desktop에 등록된 모든 MCP 서버를 **환경변수(`env` 블록)까지 함께 복사**합니다.
-Claude Desktop과 Claude Code에 동일한 키를 두 번 입력할 필요가 없어 가장 간편합니다.
-
-> ⚠️ Windows 네이티브는 미지원입니다. Windows 사용자는 방법 B를 이용하세요.
-
-#### 방법 B. 직접 등록
-
-```bash
-claude mcp add ncp-server \
-  -e NCP_ACCESS_KEY=your_access_key \
-  -e NCP_SECRET_KEY=your_secret_key \
-  -- python3 /절대/경로/NCP-Claude-Project/ncp-mcp/ncp_server.py
-```
-
-→ `-e` 플래그로 환경변수를 함께 등록하면 셸 `export`가 필요 없습니다.
-
 ---
 
 ## Part 3. NCP MCP 서버 사용
@@ -428,3 +402,31 @@ chmod 600 ~/.ssh/config
 ### 8-2. 연결 확인
 
 새 창의 좌측 하단에 `SSH: ncp-web-dev` 같은 표시가 보이면 정상 접속된 것입니다.
+
+---
+
+## 참고. Claude Code에 MCP 등록
+
+Claude Desktop에 이미 설정했다면 아래 두 가지 방법 중 하나를 사용합니다.
+
+#### 방법 A. Claude Desktop 설정에서 가져오기 (Mac / WSL, 권장)
+
+```bash
+claude mcp add-from-claude-desktop
+```
+
+→ Claude Desktop에 등록된 모든 MCP 서버를 **환경변수(`env` 블록)까지 함께 복사**합니다.
+Claude Desktop과 Claude Code에 동일한 키를 두 번 입력할 필요가 없어 가장 간편합니다.
+
+> ⚠️ Windows 네이티브는 미지원입니다. Windows 사용자는 방법 B를 이용하세요.
+
+#### 방법 B. 직접 등록
+
+```bash
+claude mcp add ncp-server \
+  -e NCP_ACCESS_KEY=your_access_key \
+  -e NCP_SECRET_KEY=your_secret_key \
+  -- python3 /절대/경로/NCP-Claude-Project/ncp-mcp/ncp_server.py
+```
+
+→ `-e` 플래그로 환경변수를 함께 등록하면 셸 `export`가 필요 없습니다.
