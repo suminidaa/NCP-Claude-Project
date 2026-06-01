@@ -151,7 +151,7 @@ pip install -r requirements.txt or pip3 install -r requirements.txt
 
 ## Part 3. NCP MCP 서버 사용
 
-### 3-1. 사용 예시
+### 3-1. NCP MCP로 서버생성 및 공인IP부여하기
 
 Claude에 다음과 같이 자연어로 요청하면 됩니다.
 
