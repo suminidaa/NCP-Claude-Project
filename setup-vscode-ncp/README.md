@@ -51,8 +51,8 @@ NCP MCP 서버를 사용하면 Claude에서 자연어만으로 NCP 서버·VPC·
 **개인 PC의 터미널을 열고 저장소 클론 및 의존성 설치 진행**
 
 ```bash
-git clone <repo-url>
-cd ncp-mcp
+git clone https://oss.navercorp.com/jina-kang/NCP-Claude-Project.git
+cd NCP-Claude-Project/ncp-mcp
 ```
 
 ```bash
@@ -81,7 +81,7 @@ pip install -r requirements.txt
   "mcpServers": {
     "ncp-server": {
       "command": "python3",
-      "args": ["/절대/경로/ncp-mcp/ncp_server.py"],
+      "args": ["/절대/경로/NCP-Claude-Project/ncp-mcp/ncp_server.py"],
       "env": {
         "NCP_ACCESS_KEY": "your_access_key",
         "NCP_SECRET_KEY": "your_secret_key"
@@ -102,7 +102,7 @@ pip install -r requirements.txt
   "mcpServers": {
     "ncp-server": {
       "command": "python",
-      "args": ["C:\\절대\\경로\\ncp-mcp\\ncp_server.py"],
+      "args": ["C:\\절대\\경로\\NCP-Claude-Project\\ncp-mcp\\ncp_server.py"],
       "env": {
         "NCP_ACCESS_KEY": "your_access_key",
         "NCP_SECRET_KEY": "your_secret_key"
@@ -133,7 +133,7 @@ Claude Desktop과 Claude Code에 동일한 키를 두 번 입력할 필요가 �
 claude mcp add ncp-server \
   -e NCP_ACCESS_KEY=your_access_key \
   -e NCP_SECRET_KEY=your_secret_key \
-  -- python3 /절대/경로/ncp-mcp/ncp_server.py
+  -- python3 /절대/경로/NCP-Claude-Project/ncp-mcp/ncp_server.py
 ```
 
 → `-e` 플래그로 환경변수를 함께 등록하면 셸 `export`가 필요 없습니다.
