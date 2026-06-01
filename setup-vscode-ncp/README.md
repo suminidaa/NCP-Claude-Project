@@ -243,9 +243,9 @@ Remote-SSH로 NCP 서버에 접속하려면 두 가지가 필요합니다:
 
 1. NCP 콘솔 → ** Computee→ Server**
 2. 해당 서버의 **"공인 IP"** 컬럼 값을 메모합니다.
-3. 또는 Claude Desktop에서 `"내 NCP 서버 목록 보여줘"`로도 확인 가능합니다.
+3. 또는 Claude Desktop에서 `"내 NCP 서버 공인ip알려줘"`로도 확인 가능합니다.
 
-### 7-3. SSH 비밀번호 초기화 (Rocky Linux)
+### 7-3.관리자 비밀번호 확인 (Rocky Linux)
 
 NCP는 처음 생성된 서버에 대해 콘솔에서 "관리자 비밀번호 확인" 절차를 거쳐야 SSH 접속이 가능합니다.
 
