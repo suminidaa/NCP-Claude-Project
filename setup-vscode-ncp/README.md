@@ -44,19 +44,19 @@ NCP MCP 서버를 사용하면 Claude에서 자연어만으로 NCP 서버·VPC·
 1. [NCP 콘솔](https://console.ncloud.com) 로그인
 2. 우측 상단 '계정 클릭' → **계정 및 보안 관리** → **보안 관리** → **접근 관리** → **API 인증키**
 3. **신규 API 인증키 생성** 클릭
-4. Access Key ID / Secret Key를 안전한 곳에 보관 (Secret Key는 재조회 불가)
+4. Access Key ID / Secret Key를 안전한 곳에 보관 
 
 ### 1-3. 저장소 클론 및 의존성 설치
 
 **개인 PC의 터미널을 열고 저장소 클론 및 의존성 설치 진행**
 
 ```bash
-git <repo url>
 cd NCP-Claude-Project/ncp-mcp
 ```
-
+** 
 ```bash
-pip install -r requirements.txt or pip3 install -r requirements.txt
+pip install -r requirements.txt or 
+pip3 install -r requirements.txt  
 ```
 
 ---
