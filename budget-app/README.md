@@ -43,13 +43,17 @@
 
 ## 🚀 단계별 가이드
 
+### 0단계 · 원격 서버 접속
+
+이전 과정에서 진행한대로 VSCode를 통해 원격 서버에 접속합니다.
+
 ### 1단계 · 프로젝트 받기 (git clone)
 
 원격 서버(VSCode 통합 터미널)에서 git 저장소를 클론합니다.
 
 ```bash
-git clone <저장소-URL> budget
-cd budget
+git clone <저장소-URL> budget-app
+cd budget-app
 ```
 
 > 💡 위 `<저장소-URL>` 자리에는  GitHub 저장소 주소를 넣으세요.
