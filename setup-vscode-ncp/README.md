@@ -273,7 +273,7 @@ VS Code Remote-SSH가 사용할 설정 파일을 만듭니다.
 Host ncp-web-dev
     HostName 공인.IP.주소.여기에
     User root
-    IdentityFile ~/.ssh/[인증키 파일.pem]
+    IdentityFile ~/Downloads/[인증키 파일.pem]
     IdentitiesOnly yes
     StrictHostKeyChecking no
 ```
