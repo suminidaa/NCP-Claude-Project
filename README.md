@@ -9,7 +9,7 @@
 ## 📁 폴더 구조와 각 폴더의 역할
 
 ```
-ncp-claudecode/
+ncp-claudecode-Project/
 ├─ setup-vscode-ncp/   # 🛠️  [STEP 1] 개발 환경 세팅 가이드
 ├─ diary-app/          # 🌸  [STEP 2] 실습 1 - 다이어리 웹앱 (Object Storage 입문)
 ├─ budget-app/         # 💰  [STEP 3] 실습 2 - 가계부 웹앱 (Object Storage + CLOVA OCR)
