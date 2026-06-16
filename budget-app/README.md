@@ -65,8 +65,11 @@ cd budget-app
 
 1. [NCP 콘솔](https://console.ncloud.com) → **Services → Storage → Object Storage**
 2. **Bucket Management → 버킷 생성**
-3. 버킷 이름 입력 (예: `my-budget-bucket`), **비공개(Private)** 선택
-4. 버킷 이름은 메모 (추후 환경 설정 시 사용)
+3. 버킷 이름 입력 (예: `my-budget-bucket`) — 버킷 이름은 고유해야 합니다.
+4. 하단의 '다음' 버튼 클릭
+5. 설정관리, 암호화 관리는 디폴트 값 유지 후 하단의 '다음' 버튼 클릭
+6. 권한관리 > 전체 공개 부분에  **공개 안함** 선택 후 하단의 '다음' 버튼 클릭
+7. 최종 확인 페이지에서 하단의 '버킷 생성' 클릭
 
 #### 2-2. API 인증키 발급
 
