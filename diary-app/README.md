@@ -1,3 +1,5 @@
+
+
 # 🌸 나의 다이어리 (Personal Diary)
 
 따뜻한 톤의 캘린더형 개인 다이어리 웹앱. **FastAPI + Naver Cloud Platform Object Storage** 로 동작합니다.
@@ -32,7 +34,7 @@
 ## 📋 사전 준비
 
 1. **Python 3.11 이상** — [python.org](https://www.python.org/downloads/) 에서 다운로드
-2. **Git** — [git-scm.com](https://git-scm.com/downloads)
+2. **Git** 
 3. **NCP(네이버 클라우드 플랫폼) 계정** — [ncloud.com](https://www.ncloud.com) 에서 가입 (신용카드 등록 필요 — 무료 한도 제공)
 4. (배포 시) **NCP Compute 서버** 또는 임의의 Linux 서버
 
@@ -43,8 +45,8 @@
 ### 1단계 · 저장소 클론
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone <저장소-URL> 
+cd diary-app
 ```
 
 ### 2단계 · NCP에서 Object Storage 준비
@@ -55,28 +57,23 @@ cd <your-repo>
 2. 좌측 메뉴 **Services → Storage → Object Storage**
 3. **Bucket Management** 화면에서 **버킷 생성** 클릭
 4. 버킷 정보 입력:
-   - **버킷 이름**: 예) `my-diary-bucket` (전역 고유 — 다른 사람이 쓴 이름은 못 씀)
-   - **공개 여부**: **비공개(Private)** 선택 ← 중요
+   - **버킷 이름**: 예) `my-diary-bucket` (오브젝트스토리지 이름은 고유해야합니다)입력 후 하단의 '다음' 버튼 클릭
+   - 설정관리, 암호화 관리는 디폴트값 유지 후 하단의 '다음' 버튼 클릭
+   - 권한 관리 > 전체 공개 > '공개 안함' 선택 후 하단의 '다음' 버튼 클릭
+   - 하단의 '버킷 생성' 클릭
 5. 생성 완료 후 버킷 이름을 메모해 둡니다 (`.env`에 입력할 값)
 
 #### 2-2. API 인증키 발급
 
 1. 콘솔 우측 상단 본인 계정명 클릭 → **마이페이지**
-2. 좌측 메뉴 **계정 관리 → 인증키 관리**
-3. **신규 API 인증키 생성** 클릭
-4. **Access Key ID** 와 **Secret Key** 두 값을 모두 메모
-   - ⚠️ Secret Key는 발급 직후에만 표시됩니다. 잃어버리면 키를 폐기하고 재발급해야 합니다.
-   - 메인 계정 키로 발급 시 모든 권한이 자동 부여됩니다.
+2. 좌측 메뉴 **계정 및 보안 관리 → 보안 관리 → 접근 관리 이동**
+3. **Access Key ID** 와 **Secret Key** 두 값을 모두 메모(이전 과정에서 API Key값을 생성하였기에 기 생성된 키 값을 복사합니다. 이전 과정에서 생성하지 않으신 분들은 '새로운 API 인증키 생성'을 통해 생성 진행합니다.)
+
 
 #### 2-3. ACG설정
 
-- **NCP ACG (Access Control Group)**: 콘솔 → Server → ACG → 해당 서버의 ACG → 인바운드 규칙에 **TCP myip에 대한 8000포트** 추가
+- **ACG (Access Control Group) 규칙 추가**: 콘솔 → Server → ACG → 해당 서버의 ACG → 인바운드 규칙에 **TCP myip에 대한 8000포트** 추가
 
-
-#### 2-4. (선택) Sub Account 사용 시 권한 확인
-
-- 메인 계정 키가 아니라 **Sub Account(IAM)** 키로 운영하려면, 해당 Sub Account에 `NCP_ObjectStorage_FullAccess` 정책이 부여되어 있어야 합니다.
-- 콘솔 → **Services → IAM/Sub Account → 사용자 → 정책 부여**
 
 ### 3단계 · 환경변수 설정
 
