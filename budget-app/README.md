@@ -52,8 +52,8 @@
 원격 서버(VSCode 통합 터미널)에서 git 저장소를 클론합니다.
 
 ```bash
-git clone <저장소-URL> budget-app
-cd budget-app
+git clone <저장소-URL>
+cd NCP-Claude-Project/budget-app
 ```
 
 > 💡 위 `<저장소-URL>` 자리에는  GitHub 저장소 주소를 넣으세요.
