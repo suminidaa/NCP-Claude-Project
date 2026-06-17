@@ -46,7 +46,7 @@
 
 ```bash
 git clone <저장소-URL> 
-cd diary-app
+cd NCP-Claude-Project/diary-app
 ```
 
 ### 2단계 · NCP에서 Object Storage 준비
