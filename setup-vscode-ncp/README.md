@@ -241,7 +241,7 @@ Remote-SSH로 NCP 서버에 접속하려면 두 가지가 필요합니다:
 
 ### 7-2. 서버 공인 IP 확인
 
-1. NCP 콘솔 → ** Computee→ Server**
+1. NCP 콘솔 → ** Compute → Server**
 2. 해당 서버의 **"공인 IP"** 컬럼 값을 메모합니다.
 3. 또는 Claude Desktop에서 `"내 NCP 서버 공인ip알려줘"`로도 확인 가능합니다.
 
