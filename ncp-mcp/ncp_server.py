@@ -1224,5 +1224,81 @@ def delete_bucket(bucket_name: str,
         return {"error": str(e)}
 
 
+def _run_http() -> None:
+    """원격(HTTP) 모드 — claude.ai 웹 '사용자 지정 커넥터'용.
+
+    비밀 토큰(MCP_AUTH_TOKEN)이 없는 요청은 모두 404로 차단합니다.
+    허용되는 접속 방법은 두 가지입니다.
+      1) 비밀 경로:   https://<주소>/<토큰>/mcp      ← claude.ai 커넥터에는 이 URL을 등록
+      2) Bearer 헤더: https://<주소>/mcp  +  Authorization: Bearer <토큰>
+    """
+    import re
+    import uvicorn
+    from mcp.server.transport_security import TransportSecuritySettings
+
+    token = os.environ.get("MCP_AUTH_TOKEN", "")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{32,}", token):
+        raise SystemExit(
+            "MCP_AUTH_TOKEN이 없거나 너무 짧습니다 (영문/숫자/-/_ 32자 이상).\n"
+            "생성: python -c \"import secrets; print(secrets.token_urlsafe(32))\""
+        )
+
+    host = os.environ.get("MCP_HOST", "127.0.0.1")
+    # Render 등 호스팅 서비스는 포트를 PORT 환경변수로 지정함
+    port = int(os.environ.get("MCP_PORT") or os.environ.get("PORT") or "8000")
+
+    # 공개 도메인/터널 뒤에서 Host 헤더가 localhost가 아니므로 기본 DNS-rebinding
+    # 차단을 끕니다. 대신 아래 토큰 검사가 모든 요청을 막습니다.
+    mcp.settings.transport_security = TransportSecuritySettings(
+        enable_dns_rebinding_protection=False
+    )
+    app = mcp.streamable_http_app()
+    mcp_path = mcp.settings.streamable_http_path          # 기본 "/mcp"
+    token_b = token.encode()
+    bearer_b = b"Bearer " + token_b
+
+    async def _not_found(send) -> None:
+        await send({"type": "http.response.start", "status": 404,
+                    "headers": [(b"content-type", b"text/plain")]})
+        await send({"type": "http.response.body", "body": b"Not Found"})
+
+    async def guarded_app(scope, receive, send):
+        if scope["type"] == "lifespan":                     # 세션 매니저 시작/종료
+            return await app(scope, receive, send)
+        if scope["type"] != "http":                         # websocket 등은 거부
+            return
+
+        path = scope.get("path", "")
+
+        # 1) 비밀 경로: /<토큰>/mcp...
+        parts = path.split("/", 2)                          # ["", "<토큰>", "mcp..."]
+        if len(parts) == 3 and hmac.compare_digest(parts[1].encode(), token_b):
+            inner = "/" + parts[2]
+            if inner == mcp_path or inner.startswith(mcp_path + "/"):
+                scope = dict(scope, path=inner, raw_path=inner.encode())
+                return await app(scope, receive, send)
+
+        # 2) Bearer 헤더
+        auth = b""
+        for k, v in scope.get("headers", []):
+            if k == b"authorization":
+                auth = v
+                break
+        if hmac.compare_digest(auth, bearer_b) and (
+            path == mcp_path or path.startswith(mcp_path + "/")
+        ):
+            return await app(scope, receive, send)
+
+        return await _not_found(send)
+
+    print(f"[ncp-mcp] HTTP 모드로 시작: http://{host}:{port}/<토큰>{mcp_path}")
+    # access_log=False: 접속 로그에 비밀 경로(토큰)가 찍히지 않도록 함
+    uvicorn.run(guarded_app, host=host, port=port, access_log=False, log_level="warning")
+
+
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    # MCP_TRANSPORT=http 이면 원격 모드, 아니면 기존처럼 stdio (데스크톱 앱/VS Code용)
+    if os.environ.get("MCP_TRANSPORT", "stdio").lower() in ("http", "streamable-http"):
+        _run_http()
+    else:
+        mcp.run(transport="stdio")
