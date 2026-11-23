@@ -57,6 +57,10 @@ def _sign(method: str, path: str) -> dict:
     }
 
 def _get(path: str) -> dict:
+    # NCP API 기본 응답은 XML → 모든 호출에 JSON 응답을 강제 (_build_path를 안 거치는
+    # list_servers / list_vpcs / get_server_detail / _find_vpc_by_name 등도 포함)
+    if "responseFormatType=" not in path:
+        path += ("&" if "?" in path else "?") + "responseFormatType=json"
     res = requests.get(BASE_URL + path, headers=_sign("GET", path))
     try:
         return res.json()
